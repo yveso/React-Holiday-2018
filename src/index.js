@@ -3,16 +3,29 @@ import ReactDOM from "react-dom";
 
 import "./styles.css";
 
-function PokemonListItem(props) {
-  return <li {...props} />;
+function PokemonListItem({ className, component: Component = "li", ...props }) {
+  return (
+    <Component
+      className={["pokeman-list-item", className].join(" ")}
+      {...props}
+    />
+  );
 }
+
+let characterData = [
+  { name: "Pikachu" },
+  { name: "Bisasam" },
+  { name: "Eevee" }
+];
 
 function App() {
   return (
     <div>
-      <h1>React Holiday</h1>
+      <h1>React Holiday 2018</h1>
       <ul>
-        <PokemonListItem>Pokemon</PokemonListItem>
+        {characterData.map(item => (
+          <PokemonListItem>{item.name}</PokemonListItem>
+        ))}
       </ul>
     </div>
   );
