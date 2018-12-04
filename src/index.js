@@ -20,7 +20,7 @@ function PokemonList() {
   return (
     <ul>
       {PokemonCollectionResource.read(cache).results.map(pokemon => (
-        <PokemonListItem key="{pokemon.name}">{pokemon.name}</PokemonListItem>
+        <PokemonListItem key={pokemon.name}>{pokemon.name}</PokemonListItem>
       ))}
     </ul>
   );
