@@ -6,6 +6,7 @@
   "main": "src/index.js",
   "dependencies": {
     "react": "16.7.0-alpha.2 - next",
+    "react-cache": "16.6.0-alpha.8af6728 - canary",
     "react-dom": "16.7.0-alpha.2 - next",
     "react-scripts": "2.0.3"
   },
