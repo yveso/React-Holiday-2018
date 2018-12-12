@@ -16,17 +16,12 @@ function PokemonListItem({ className, component: Component = "li", ...props }) {
   );
 }
 
-function PokemonList({ onSelect }) {
+function PokemonList({ renderItem }) {
   return (
     <ul>
-      {PokemonCollectionResource.read().results.map(pokemon => (
-        <PokemonListItem
-          onClick={() => onSelect(pokemon.url.split("/")[6])}
-          key={pokemon.name}
-        >
-          {pokemon.name}
-        </PokemonListItem>
-      ))}
+      {PokemonCollectionResource.read().results.map(pokemon =>
+        renderItem({ id: pokemon.url.split("/")[6], ...pokemon })
+      )}
     </ul>
   );
 }
@@ -36,7 +31,7 @@ function App() {
 
   return (
     <div>
-      <h1>React Holiday 2018: Day 7</h1>
+      <h1>React Holiday 2018: Day 10</h1>
       <hr />
       <strong>Selected Pokemon ID: {selectedPokemonId}</strong>
       <hr />
@@ -51,7 +46,16 @@ function App() {
         }
       >
         <React.Suspense fallback={<div>...loading</div>}>
-          <PokemonList onSelect={id => setSelectedPokemonID(id)} />
+          <PokemonList
+            renderItem={pokemon => (
+              <PokemonListItem
+                onClick={() => setSelectedPokemonID(pokemon.id)}
+                key={pokemon.id}
+              >
+                {pokemon.name}
+              </PokemonListItem>
+            )}
+          />
         </React.Suspense>
       </ErrorBoundary>
     </div>
