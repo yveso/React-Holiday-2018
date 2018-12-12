@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import { unstable_createResource as createResource } from "react-cache";
+import ErrorBoundary from "./ErrorBoundary";
 
 let PokemonCollectionResource = createResource(() =>
-  fetch("https://pokeapi.co/api/v2/pokemon-wahwah/").then(res => res.json())
+  fetch("https://pokeapi.co/api/v2/pokemon/").then(res => res.json())
 );
 
 function PokemonListItem({ className, component: Component = "li", ...props }) {
@@ -15,71 +16,29 @@ function PokemonListItem({ className, component: Component = "li", ...props }) {
   );
 }
 
-function PokemonList() {
+function PokemonList({ onSelect }) {
   return (
     <ul>
       {PokemonCollectionResource.read().results.map(pokemon => (
-        <PokemonListItem key={pokemon.name}>{pokemon.name}</PokemonListItem>
+        <PokemonListItem
+          onClick={() => onSelect(pokemon.url.split("/")[6])}
+          key={pokemon.name}
+        >
+          {pokemon.name}
+        </PokemonListItem>
       ))}
     </ul>
   );
 }
 
-class ErrorBoundary extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { hasError: false };
-  }
-
-  static getDerivedStateFromError(error) {
-    // Update state so the next render will show the fallback UI.
-    return { hasError: true };
-  }
-
-  componentDidCatch(error, info) {
-    // You can also log the error to an error reporting service
-    console.error(error, info);
-  }
-
-  render() {
-    if (this.state.hasError) {
-      // You can render any custom fallback UI
-      return this.props.fallback || <div>Something went wrong...</div>;
-    }
-
-    return this.props.children;
-  }
-}
-
-let PokemonDetailResource = createResource(() =>
-  fetch("https://pokeapi.co/api/v2/pokemon/25/").then(res => res.json())
-);
-
-function PokemonDetail() {
-  return (
-    <div>
-      {[PokemonDetailResource.read()].map(item => (
-        <PokemonDetailComponent key={item.name} {...item} />
-      ))}
-    </div>
-  );
-}
-
-function PokemonDetailComponent(props) {
-  return (
-    <div>
-      <h1>{props.name}</h1>
-      <p>
-        Weight: <strong>{props.weight}</strong>
-      </p>
-    </div>
-  );
-}
-
 function App() {
+  let [selectedPokemonId, setSelectedPokemonID] = useState(0);
+
   return (
     <div>
-      <h1>React Holiday 2018: Day 6</h1>
+      <h1>React Holiday 2018: Day 7</h1>
+      <hr />
+      <strong>Selected Pokemon ID: {selectedPokemonId}</strong>
       <hr />
       <ErrorBoundary
         fallback={
@@ -92,7 +51,7 @@ function App() {
         }
       >
         <React.Suspense fallback={<div>...loading</div>}>
-          <PokemonList />
+          <PokemonList onSelect={id => setSelectedPokemonID(id)} />
         </React.Suspense>
       </ErrorBoundary>
     </div>
