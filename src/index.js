@@ -1,61 +1,31 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
-import { unstable_createResource as createResource } from "react-cache";
-import ErrorBoundary from "./ErrorBoundary";
-import PokemonDetail from "./PokemonDetail";
-
-let PokemonCollectionResource = createResource(() =>
-  fetch("https://pokeapi.co/api/v2/pokemon/").then(res => res.json())
-);
-
-function PokemonListItem({ className, component: Component = "li", ...props }) {
-  return (
-    <Component
-      className={["pokemon-list-item", className].join(" ")}
-      {...props}
-    />
-  );
-}
-
-function PokemonList({ renderItem }) {
-  return PokemonCollectionResource.read().results.map(pokemon =>
-    renderItem({ id: pokemon.url.split("/")[6], ...pokemon })
-  );
-}
+import ErrorBoundary from "./error-boundary";
+import Pokemon from "./pokemon";
 
 function App() {
   let [selectedPokemonId, setSelectedPokemonID] = useState(1);
 
   return (
     <div>
-      <h1>React Holiday 2018: Day 11</h1>
+      <h1>React Holiday 2018: Day 12</h1>
       <hr />
 
-      <ErrorBoundary
-        fallback={
-          <div>
-            Ooops{" "}
-            <span role="img" aria-label="sad face">
-              😢
-            </span>
-          </div>
-        }
-      >
-        <React.Suspense fallback={<div>...loading details</div>}>
-          <PokemonDetail pokemonId={selectedPokemonId} />
+      <ErrorBoundary fallback={<Pokemon.ErrorFallback />}>
+        <React.Suspense fallback={<Pokemon.LoadDetailFallback />}>
+          <Pokemon.Detail pokemonId={selectedPokemonId} />
         </React.Suspense>
-
-        <React.Suspense fallback={<div>...loading</div>}>
-          <hr />
+        <hr />
+        <React.Suspense fallback={<Pokemon.LoadListFallback />}>
           <ul>
-            <PokemonList
+            <Pokemon.List
               renderItem={pokemon => (
-                <PokemonListItem
+                <Pokemon.ListItem
                   onClick={() => setSelectedPokemonID(pokemon.id)}
                   key={pokemon.id}
                 >
                   {pokemon.name}
-                </PokemonListItem>
+                </Pokemon.ListItem>
               )}
             />
           </ul>
