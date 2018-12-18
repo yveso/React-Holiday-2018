@@ -12,8 +12,50 @@ function Detail({ pokemonId: id }) {
   let pokemon = Resource.read(id);
   return (
     <article>
-      <h1>It's {pokemon.name}</h1>
-      <img src={pokemon.sprites["front_default"]} alt={pokemon.name} />
+      <section>
+        <h1>It's {pokemon.name}</h1>
+        <img src={pokemon.sprites["front_default"]} alt={pokemon.name} />
+      </section>
+      <section>
+        <dl>
+          <dl>Height</dl>
+          <dd>{pokemon.height}</dd>
+          <dl>Weight</dl>
+          <dd>{pokemon.height}</dd>
+          <dl>Abilities</dl>
+          <dd>
+            {pokemon.abilities.map(({ ability }) => ability.name).join(", ")}
+          </dd>
+        </dl>
+      </section>
+      <section>
+        <h2>Types</h2>
+        <ul>
+          {" "}
+          {pokemon.types.map(({ type }) => (
+            <li>{type.name}</li>
+          ))}
+        </ul>
+      </section>
+      <section>
+        <h2>Stats</h2>
+        <table>
+          <tbody>
+            <tr>
+              {pokemon.stats.map(({ base_stat }) => (
+                <td>{base_stat}</td>
+              ))}
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              {pokemon.stats.map(({ stat }) => (
+                <th>{stat.name}</th>
+              ))}
+            </tr>
+          </tfoot>
+        </table>
+      </section>
     </article>
   );
 }
