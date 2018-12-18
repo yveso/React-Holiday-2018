@@ -1,8 +1,11 @@
 import React from "react";
 import { unstable_createResource as createResource } from "react-cache";
+import sleep from "sleep-promise";
 
 let Resource = createResource(id =>
-  fetch(`https://pokeapi.co/api/v2/pokemon/${id}/`).then(res => res.json())
+  fetch(`https://pokeapi.co/api/v2/pokemon/${id}/`)
+    .then(res => res.json())
+    .then(sleep(2000))
 );
 
 function Detail({ pokemonId: id }) {

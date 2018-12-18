@@ -8,15 +8,21 @@ function App() {
 
   return (
     <div>
-      <h1>React Holiday 2018: Day 12</h1>
+      <h1>React Holiday 2018: Day 13</h1>
       <hr />
 
       <ErrorBoundary fallback={<Pokemon.ErrorFallback />}>
-        <React.Suspense fallback={<Pokemon.LoadDetailFallback />}>
+        <React.Suspense
+          maxDuration={1000}
+          fallback={<Pokemon.LoadDetailFallback />}
+        >
           <Pokemon.Detail pokemonId={selectedPokemonId} />
         </React.Suspense>
         <hr />
-        <React.Suspense fallback={<Pokemon.LoadListFallback />}>
+        <React.Suspense
+          maxDuration={1000}
+          fallback={<Pokemon.LoadListFallback />}
+        >
           <ul>
             <Pokemon.List
               renderItem={pokemon => (
@@ -36,4 +42,4 @@ function App() {
 }
 
 const rootElement = document.getElementById("root");
-ReactDOM.render(<App />, rootElement);
+ReactDOM.createRoot(rootElement).render(<App />);
