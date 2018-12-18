@@ -19,7 +19,9 @@ function Detail({ pokemonId: id }) {
 }
 
 let CollectionResource = createResource(() =>
-  fetch("https://pokeapi.co/api/v2/pokemon/").then(res => res.json())
+  fetch("https://pokeapi.co/api/v2/pokemon/")
+    .then(res => res.json())
+    .then(sleep(1000))
 );
 
 function ListItem({ className, component: Component = "li", ...props }) {

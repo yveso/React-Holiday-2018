@@ -8,19 +8,19 @@ function App() {
 
   return (
     <div>
-      <h1>React Holiday 2018: Day 13</h1>
+      <h1>React Holiday 2018: Day 14</h1>
       <hr />
 
       <ErrorBoundary fallback={<Pokemon.ErrorFallback />}>
         <React.Suspense
-          maxDuration={1000}
+          maxDuration={300}
           fallback={<Pokemon.LoadDetailFallback />}
         >
           <Pokemon.Detail pokemonId={selectedPokemonId} />
         </React.Suspense>
         <hr />
         <React.Suspense
-          maxDuration={1000}
+          maxDuration={300}
           fallback={<Pokemon.LoadListFallback />}
         >
           <ul>
