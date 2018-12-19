@@ -2,10 +2,10 @@ import React from "react";
 import { unstable_createResource as createResource } from "react-cache";
 import sleep from "sleep-promise";
 
-let Resource = createResource(id =>
-  fetch(`https://pokeapi.co/api/v2/pokemon/${id}/`)
-    .then(res => res.json())
-    .then(sleep(2000))
+let Resource = createResource(
+  id =>
+    fetch(`https://pokeapi.co/api/v2/pokemon/${id}/`).then(res => res.json())
+  //.then(sleep(2000))
 );
 
 function Detail({ pokemonId: id }) {
@@ -63,7 +63,7 @@ function Detail({ pokemonId: id }) {
 let CollectionResource = createResource(() =>
   fetch("https://pokeapi.co/api/v2/pokemon/")
     .then(res => res.json())
-    .then(sleep(1000))
+    //.then(sleep(1000))
     .then(res => ({
       ...res,
       results: res.results.map(pokemon => ({
