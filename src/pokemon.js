@@ -64,6 +64,13 @@ let CollectionResource = createResource(() =>
   fetch("https://pokeapi.co/api/v2/pokemon/")
     .then(res => res.json())
     .then(sleep(1000))
+    .then(res => ({
+      ...res,
+      results: res.results.map(pokemon => ({
+        id: pokemon.url.split("/")[6],
+        ...pokemon
+      }))
+    }))
 );
 
 function ListItem({ className, component: Component = "li", ...props }) {
@@ -76,9 +83,7 @@ function ListItem({ className, component: Component = "li", ...props }) {
 }
 
 function List({ renderItem }) {
-  return CollectionResource.read().results.map(pokemon =>
-    renderItem({ id: pokemon.url.split("/")[6], ...pokemon })
-  );
+  return CollectionResource.read().results.map(renderItem);
 }
 
 function ErrorFallback() {
