@@ -33,8 +33,8 @@ function App() {
             fallback={<Pokemon.LoadListFallback />}
           >
             <ul>
-              <Pokemon.List
-                renderItem={pokemon => (
+              <Pokemon.List>
+                {pokemon => (
                   <Pokemon.ListItem
                     onClick={() => setSelectedPokemonID(pokemon.id)}
                     key={pokemon.id}
@@ -42,7 +42,7 @@ function App() {
                     {pokemon.name}
                   </Pokemon.ListItem>
                 )}
-              />
+              </Pokemon.List>
             </ul>
           </React.Suspense>
         )}

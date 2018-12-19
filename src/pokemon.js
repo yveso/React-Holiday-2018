@@ -94,8 +94,8 @@ function ListItem({ className, component: Component = "li", ...props }) {
   );
 }
 
-function List({ renderItem }) {
-  return CollectionResource.read().results.map(renderItem);
+function List({ children }) {
+  return CollectionResource.read().results.map(children);
 }
 
 function ErrorFallback() {
