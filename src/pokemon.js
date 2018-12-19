@@ -8,13 +8,26 @@ let Resource = createResource(
   //.then(sleep(2000))
 );
 
+const ImageResource = createResource(
+  src =>
+    new Promise(resolve => {
+      const img = new Image();
+      img.onload = () => resolve(src);
+      img.src = src;
+    })
+);
+
+function Img({ src, alt, ...rest }) {
+  return <img src={ImageResource.read(src)} alt={alt} {...rest} />;
+}
+
 function Detail({ pokemonId: id }) {
   let pokemon = Resource.read(id);
   return (
     <article>
       <section>
         <h1>It's {pokemon.name}</h1>
-        <img src={pokemon.sprites["front_default"]} alt={pokemon.name} />
+        <Img src={pokemon.sprites["front_default"]} alt={pokemon.name} />
       </section>
       <section>
         <dl>
@@ -31,7 +44,6 @@ function Detail({ pokemonId: id }) {
       <section>
         <h2>Types</h2>
         <ul>
-          {" "}
           {pokemon.types.map(({ type }) => (
             <li>{type.name}</li>
           ))}
