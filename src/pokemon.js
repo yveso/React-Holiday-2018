@@ -1,6 +1,7 @@
 import React from "react";
 import { unstable_createResource as createResource } from "react-cache";
 import sleep from "sleep-promise";
+import "./pokemon.css";
 
 let Resource = createResource(
   id =>
