@@ -1,15 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import ErrorBoundary from "./error-boundary";
 import Pokemon from "./pokemon";
 
 function App() {
-  let [selectedPokemonId, setSelectedPokemonID] = useState(0);
+  let [selectedPokemonId, setSelectedPokemonID] = useState(1);
+  let [width, setWidth] = useState(window.innerWidth);
+  useEffect(() => {
+    document.addEventListener("resize", setWidth(window.innerWidth));
+  });
 
   return (
     <div>
-      <h1>React Holiday 2018: Day 19</h1>
+      <h1>React Holiday 2018: Day 20</h1>
       <hr />
+
+      <strong>width: {width}</strong>
 
       <ErrorBoundary fallback={<Pokemon.ErrorFallback />}>
         {selectedPokemonId > 0 ? (

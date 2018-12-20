@@ -48,7 +48,7 @@ function Detail({ pokemonId: id }) {
         <h2>Types</h2>
         <ul>
           {pokemon.types.map(({ type }) => (
-            <li>{type.name}</li>
+            <li key={type.name}>{type.name}</li>
           ))}
         </ul>
       </section>
@@ -57,15 +57,15 @@ function Detail({ pokemonId: id }) {
         <table>
           <tbody>
             <tr>
-              {pokemon.stats.map(({ base_stat }) => (
-                <td>{base_stat}</td>
+              {pokemon.stats.map(({ base_stat }, i) => (
+                <td key={base_stat.toString() + i}>{base_stat}</td>
               ))}
             </tr>
           </tbody>
           <tfoot>
             <tr>
-              {pokemon.stats.map(({ stat }) => (
-                <th>{stat.name}</th>
+              {pokemon.stats.map(({ stat }, i) => (
+                <th key={stat.name + i}>{stat.name}</th>
               ))}
             </tr>
           </tfoot>
