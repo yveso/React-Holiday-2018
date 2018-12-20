@@ -8,7 +8,7 @@ function App() {
 
   return (
     <div>
-      <h1>React Holiday 2018: Day 18</h1>
+      <h1>React Holiday 2018: Day 19</h1>
       <hr />
 
       <ErrorBoundary fallback={<Pokemon.ErrorFallback />}>

@@ -27,7 +27,9 @@ function Detail({ pokemonId: id }) {
     <article>
       <section>
         <h1>It's {pokemon.name}</h1>
-        <Img src={pokemon.sprites["front_default"]} alt={pokemon.name} />
+        <React.Suspense maxDuration={500} fallback="Loading image">
+          <Img src={pokemon.sprites["front_default"]} alt={pokemon.name} />
+        </React.Suspense>
       </section>
       <section>
         <dl>
