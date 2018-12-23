@@ -24,6 +24,24 @@ function Img({ src, alt, ...rest }) {
 
 function Detail({ pokemonId: id }) {
   let pokemon = Resource.read(id);
+
+  function TypeItem({ style, ...props }) {
+    return (
+      <li
+        style={{
+          backgroundColor: "gray",
+          color: "white",
+          display: "inline-flex",
+          marginRight: ".25em",
+          borderRadius: ".25em",
+          padding: ".5em 1em",
+          ...style
+        }}
+        {...props}
+      />
+    );
+  }
+
   return (
     <article>
       <section>
@@ -31,6 +49,29 @@ function Detail({ pokemonId: id }) {
         <React.Suspense maxDuration={500} fallback="Loading image">
           <Img src={pokemon.sprites["front_default"]} alt={pokemon.name} />
         </React.Suspense>
+      </section>
+      <section>
+        <h2>Types</h2>
+        <ul style={{ padding: 0 }}>
+          {pokemon.types.map(({ type }) => {
+            switch (type.name) {
+              case "grass":
+                return (
+                  <TypeItem style={{ backgroundColor: "green" }}>
+                    {type.name}
+                  </TypeItem>
+                );
+              case "poison":
+                return (
+                  <TypeItem style={{ backgroundColor: "purple" }}>
+                    {type.name}
+                  </TypeItem>
+                );
+              default:
+                return <TypeItem>{type.name}</TypeItem>;
+            }
+          })}
+        </ul>
       </section>
       <section>
         <dl>
@@ -43,14 +84,6 @@ function Detail({ pokemonId: id }) {
             {pokemon.abilities.map(({ ability }) => ability.name).join(", ")}
           </dd>
         </dl>
-      </section>
-      <section>
-        <h2>Types</h2>
-        <ul>
-          {pokemon.types.map(({ type }) => (
-            <li key={type.name}>{type.name}</li>
-          ))}
-        </ul>
       </section>
       <section>
         <h2>Stats</h2>

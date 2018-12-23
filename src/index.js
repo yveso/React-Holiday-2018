@@ -16,7 +16,7 @@ function App() {
 
   return (
     <div>
-      <h1>React Holiday 2018: Day 21</h1>
+      <h1>React Holiday 2018: Day 22</h1>
       <hr />
 
       <strong>width: {width}</strong>
