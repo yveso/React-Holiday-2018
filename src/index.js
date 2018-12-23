@@ -7,12 +7,16 @@ function App() {
   let [selectedPokemonId, setSelectedPokemonID] = useState(1);
   let [width, setWidth] = useState(window.innerWidth);
   useEffect(() => {
-    document.addEventListener("resize", setWidth(window.innerWidth));
+    let handler = () => setWidth(window.innerWidth);
+
+    window.addEventListener("resize", handler);
+
+    return () => window.removeEventListener("resize", handler);
   });
 
   return (
     <div>
-      <h1>React Holiday 2018: Day 20</h1>
+      <h1>React Holiday 2018: Day 21</h1>
       <hr />
 
       <strong>width: {width}</strong>
