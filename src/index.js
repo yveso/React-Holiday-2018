@@ -3,9 +3,8 @@ import ReactDOM from "react-dom";
 import ErrorBoundary from "./error-boundary";
 import Pokemon from "./pokemon";
 
-function App() {
-  let [selectedPokemonId, setSelectedPokemonID] = useState(1);
-  let [width, setWidth] = useState(window.innerWidth);
+function useWindowWidth(initialWidth = window.innerWidth) {
+  let [width, setWidth] = useState(initialWidth);
   useEffect(() => {
     let handler = () => setWidth(window.innerWidth);
 
@@ -13,10 +12,15 @@ function App() {
 
     return () => window.removeEventListener("resize", handler);
   });
+  return width;
+}
 
+function App() {
+  let [selectedPokemonId, setSelectedPokemonID] = useState(1);
+  let width = useWindowWidth();
   return (
     <div>
-      <h1>React Holiday 2018: Day 22</h1>
+      <h1>React Holiday 2018: Day 23</h1>
       <hr />
 
       <strong>width: {width}</strong>
