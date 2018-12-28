@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 import { unstable_createResource as createResource } from "react-cache";
 import sleep from "sleep-promise";
 import "./pokemon.css";
+import WindowWidthContext from "./window-width-context";
 
 let Resource = createResource(
   id =>
@@ -24,6 +25,7 @@ function Img({ src, alt, ...rest }) {
 
 function Detail({ pokemonId: id }) {
   let pokemon = Resource.read(id);
+  let width = useContext(WindowWidthContext);
 
   function TypeItem({ style, ...props }) {
     return (
@@ -44,6 +46,7 @@ function Detail({ pokemonId: id }) {
 
   return (
     <article>
+      <strong>width: {width}</strong>
       <section>
         <h1>It's {pokemon.name}</h1>
         <React.Suspense maxDuration={500} fallback="Loading image">
